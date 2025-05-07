@@ -87,19 +87,6 @@ if ($pendingResult) {
     }
     mysqli_free_result($pendingResult);
 }
-
-if (isset($_POST['process_order'])) {
-    $oid = (int)$_POST['oid'];
-    $updateQuery = "UPDATE tblOrder SET status = 'resolved' WHERE oid = $oid";
-    if (mysqli_query($connection, $updateQuery)) {
-        $insertQuery = "INSERT INTO tblhandledorders (oid, handledAt) VALUES ($oid, NOW())";
-        mysqli_query($connection, $insertQuery);
-        header('Location: cashier_dashboard.php');
-        exit;
-    } else {
-        $error = "Error processing order";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -124,7 +111,7 @@ if (isset($_POST['process_order'])) {
         <div class="stats-container">
             <div class="stat-card">
                 <div class="stat-value"><?php echo $customerCount; ?></div>
-                <div class="stat-label">Customers</div>
+                <div class="stat-label">Total Number of Customers</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value"><?php echo $orderCount; ?></div>
@@ -166,43 +153,47 @@ if (isset($_POST['process_order'])) {
             </div>
         </div>
         
-        <?php if (!empty($pendingOrders)): ?>
-        <div class="recent-orders">
+        <div class="pending-orders">
             <h3>Pending Orders</h3>
-            <table class="orders-table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Payment Method</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($pendingOrders as $order): ?>
-                    <tr>
-                        <td>#<?php echo $order['oid']; ?></td>
-                        <td><?php echo htmlspecialchars($order['customer_name']); ?></td>
-                        <td><?php echo date('M d, Y H:i', strtotime($order['orderTime'])); ?></td>
-                        <td>$<?php echo number_format($order['totalPrice'], 2); ?></td>
-                        <td><?php echo $order['paymentMethod']; ?></td>
-                        <td>
-                            <form method="post" class="process-order-form">
-                                <input type="hidden" name="oid" value="<?php echo $order['oid']; ?>">
-                                <button type="submit" name="process_order" class="btn-primary" onclick="return confirm('Are you sure you want to process order #<?php echo $order['oid']; ?>?');">Process</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+            <?php if (empty($pendingOrders)): ?>
+                <p>No pending orders.</p>
+            <?php else: ?>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Payment Method</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($pendingOrders as $order): ?>
+                            <tr data-oid="<?php echo $order['oid']; ?>">
+                                <td>#<?php echo $order['oid']; ?></td>
+                                <td><?php echo htmlspecialchars($order['customer_name']); ?></td>
+                                <td><?php echo date('M d, Y H:i', strtotime($order['orderTime'])); ?></td>
+                                <td>$<?php echo number_format($order['totalPrice'], 2); ?></td>
+                                <td><?php echo $order['paymentMethod']; ?></td>
+                                <td>
+                                    <span class="status-badge status-<?php echo strtolower($order['status']); ?>">
+                                        <?php echo ucfirst($order['status']); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="process_order.php" class="btn-primary">Process</a>
+                                    <a href="process_order.php" class="btn-danger">Reject</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
         </div>
-        <?php else: ?>
-            <p>No pending orders.</p>
-        <?php endif; ?>
-    </div>
+        
     <?php include 'includes/footer.php'; ?>
     
     <script>
@@ -259,7 +250,7 @@ if (isset($_POST['process_order'])) {
                     label: 'Units Sold',
                     data: [<?php echo implode(",", $foodData); ?>],
                     backgroundColor: '#36A2EB',
-                    borderColor: '#2E8BC0',
+                    borderColor: '#2st2E8BC0',
                     borderWidth: 1
                 }]
             },

@@ -1,5 +1,5 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background: #f9f9f9;
@@ -108,7 +108,6 @@ header {
     color: white;
     border: none;
     padding: 12px;
-    width: 100%;
     font-size: 16px;
     border-radius: 6px;
     cursor: pointer;
@@ -117,6 +116,25 @@ header {
 
 .btn-primary:hover {
     background-color: #345c44;
+}
+
+.btn-primary:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
 }
 
 .btn-danger {
@@ -134,19 +152,22 @@ header {
 }
 
 .alert {
-    padding: 10px;
-    border-radius: 5px;
+    padding: 15px;
     margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid transparent;
 }
 
 .alert-success {
     background-color: #d4edda;
     color: #155724;
+    border-color: #c3e6cb;
 }
 
 .alert-error {
     background-color: #f8d7da;
     color: #721c24;
+    border-color: #f5c6cb;
 }
 
 .register-link, .login-link {
@@ -173,10 +194,13 @@ header {
     flex: 1;
 }
 
-.order-container, .process-container, .dashboard-container {
+.order-container, .process-container, .dashboard-container, .profile-container {
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .menu-container {
@@ -260,6 +284,108 @@ header {
     color: #333;
 }
 
+.order-history-table, .orders-table, .order-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.order-history-table th, .order-history-table td,
+.orders-table th, .orders-table td,
+.order-details-table th, .order-details-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-history-table th, .orders-table th, .order-details-table th {
+    background-color: #f8f8f8;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: white;
+}
+
+.status-pending {
+    background-color: #ffc107;
+}
+
+.status-processing {
+    background-color: #17a2b8;
+}
+
+.status-resolved {
+    background-color: #28a745;
+}
+
+.status-cancelled {
+    background-color: #dc3545;
+}
+
+.modal, .notification-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+}
+
+.notification-modal {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.notification-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.notification-content h3 {
+    margin-top: 0;
+    color: #3F7D58;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+.password-form {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+
 footer {
     background-color: #3F7D58;
     color: white;
@@ -268,6 +394,11 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 768px) {
@@ -290,4 +421,22 @@ footer {
     .menu-items {
         grid-template-columns: 1fr;
     }
+    .order-history-table, .orders-table, .order-details-table {
+        display: block;
+        overflow-x: auto;
+    }
+    .modal-content, .notification-content {
+        width: 95%;
+        max-width: 500px;
+    }
+    .notification-content {
+        max-width: 350px;
+    }
+}
+
+.status-resolved {
+    background-color: #28a745; /* Green for resolved */
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
 }
