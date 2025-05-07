@@ -1,6 +1,5 @@
 <?php
 include 'includes/connect.php';
-session_start();
 
 // Redirect if already logged in
 if (isset($_SESSION['uid'])) {

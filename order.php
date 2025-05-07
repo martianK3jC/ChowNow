@@ -10,6 +10,8 @@ if (!isset($_SESSION['uid']) || $_SESSION['role'] !== 'customer') {
 $categories = [];
 $foods = [];
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+$success = null;
+$error = null;
 
 $categoryQuery = "SELECT DISTINCT category FROM tblfood WHERE category IS NOT NULL";
 $categoryResult = mysqli_query($connection, $categoryQuery);
@@ -81,6 +83,8 @@ if (isset($_POST['checkout'])) {
                 mysqli_commit($connection);
                 unset($_SESSION['cart']);
                 $success = "Order placed successfully!";
+                header('Location: view_orders.php');
+                exit;
             } else {
                 throw new Exception("Error creating order");
             }
@@ -138,9 +142,9 @@ if (isset($_POST['checkout'])) {
         </div>
         
         <div class="cart-container">
-            <h3>Your Cart</h3>
+            <h3>Your Order</h3>
             <?php if (empty($cart)): ?>
-                <p>Your cart is empty.</p>
+                <p>Your order is empty.</p>
             <?php else: ?>
                 <table class="cart-table">
                     <thead>
