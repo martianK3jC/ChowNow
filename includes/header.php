@@ -30,11 +30,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                         </a>
                     </li>
                 <?php elseif ($_SESSION['role'] === 'cashier'): ?>
-                    <li>
-                        <a href="process_order.php" class="<?php echo $currentPage === 'process_order' ? 'active' : ''; ?>">
-                            Process Orders
-                        </a>
-                    </li>
+                    
                 <?php endif; ?>
 
                 <li>
