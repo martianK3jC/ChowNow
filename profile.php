@@ -86,6 +86,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_password'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - ChowNow</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body, html {
+    height: 50%;
+    margin: 0;
+}
+
+.profile-container {
+    min-height: 100%; /* This ensures that the container takes at least the full height of the page */
+    padding-bottom: 50px; /* Give space for the footer */
+}
+
+footer {
+    background-color: #3F7D58;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    right: 0;
+}
+
+    </style>
 </head>
 <body>
     <?php include 'includes/header.php'; ?>

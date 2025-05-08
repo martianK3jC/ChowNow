@@ -34,6 +34,99 @@ if (isset($_SESSION['cuid'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChowNow Customer Dashboard</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .orders-container {
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 70px; /* Reserve space for footer */
+            box-sizing: border-box;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        footer {
+            background-color: #3F7D58;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+            right: 0;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .orders-table th, .orders-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .orders-table th {
+            background-color: #f4f4f4;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background-color: #FFA500;
+        }
+
+        .status-completed {
+            background-color: #28a745;
+        }
+
+        .status-cancelled {
+            background-color: #dc3545;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .alert {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
 </head>
 <body>
     <?php include 'includes/header.php'; ?>

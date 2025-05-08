@@ -115,6 +115,23 @@ mysqli_close($connection);
     <title>Process Orders - ChowNow</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main content area takes up all available space */
+        .process-container {
+            flex-grow: 1;
+        }
+
+        /* Footer stays at the bottom */
+        footer {
+            margin-top: auto; /* Push footer to the bottom */
+        }
         .loading::after {
             content: '';
             display: inline-block;
